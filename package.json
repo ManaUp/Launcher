@@ -1,0 +1,24 @@
+{
+  "name": "shopping-list",
+  "version": "1.0.0",
+  "description": "A simple shopping list app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsarman/shopping-list.git"
+  },
+  "author": "Arman Shah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itsarman/shopping-list/issues"
+  },
+  "homepage": "https://github.com/itsarman/shopping-list#readme",
+  "dependencies": {
+    "electron": "^1.8.2"
+  },
+  "devDependencies": {}
+}
