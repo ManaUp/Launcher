@@ -1,45 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Shopping List</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <title>Launcher</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
+    crossorigin="anonymous">
 </head>
 <body>
-  <nav>
-    <div class="nav-wrapper">
-      <a class="brand-logo center">Shopping List</a>
+    <div class="controls">
     </div>
-  </nav>
-  <ul></ul>
+    <div class="loginBox">
+      <h1>macOS Launch</h1>
+      <p>If you are on macOS, make sure you are running the windows version of the game through wine.</p>
+      <p>You will need to patch to play updates.</p>
+      <div class="activate-button" id="button">
+        Play
+      </div>
+    </div>
+    <div class="footer">
+      <img src="assets/crystallball2.png" alt="crystall ball">
+    </div>
 
   <script>
     const electron = require('electron');
     const {ipcRenderer} = electron;
-    const ul = document.querySelector('ul');
+    const close = document.getElementById('exit');
+    const min = document.getElementById('minimize');
+    const playButton = document.getElementById('button');
 
-    ipcRenderer.on('item:add', function(e, item) {
-      ul.className = 'collection';
-      const li = document.createElement('li');
-      li.className = 'collection-item';
-      const itemText = document.createTextNode(item);
-      li.appendChild(itemText);
-      ul.appendChild(li);
+    ipcRenderer.on('started', function(e) {
+      let notif = new Notification('ezLaunch', {
+        body: 'Launching Wizard101',
+        icon: 'https://i.imgur.com/FQNnvrd.png',
+        image: 'https://i.imgur.com/FQNnvrd.png'
+      });
     });
 
-    ipcRenderer.on('item:clear', function() {
-      ul.innerHTML = '';
-      ul.className='';
+    close.addEventListener('click', function(e){
+      ipcRenderer.send('app:quit');
     });
 
-    ul.addEventListener('dblclick', removeItem);
+    minimize.addEventListener('click', function(e) {
+      ipcRenderer.send('app:minimize');
+    });
 
-    function removeItem(e) {
-      e.target.remove();
-      if (ul.children.length == 0){
-        ul.className = '';
-      }
-    }
+    playButton.addEventListener('click', function(e) {
+      ipcRenderer.send('game:start');
+    });
+
+    document.addEventListener('dragover', event => event.preventDefault())
+    document.addEventListener('drop', event => event.preventDefault())
   </script>
 </body>
 </html>

@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <title>Add Shopping List Item</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -26,7 +24,12 @@
     function submitForm(e) {
       e.preventDefault();
       const item = document.querySelector("#item").value;
+      if (item.length == 0) {
+        alert("null value");
+      }
+      else {
       ipcRenderer.send('item:add', item);
+      }
     }
   </script>
 

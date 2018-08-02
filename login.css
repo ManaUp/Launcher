@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Barlow');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+/* Color Palette:
+*/
+
+body {
+    margin: 0px;
+    
+    background: url("assets/stars.svg"), #4e54c8;  /* fallback for old browsers */
+    background: url("assets/stars.svg"), -webkit-linear-gradient(to right, #6c3fd7, #4e54c8);  /* Chrome 10-25, Safari 5.1-6 */
+    background: url("assets/stars.svg"), linear-gradient(to right, #6c3fd7, #4e54c8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+    background: url('assets/stars.svg'), #5352ed;
+    /* fallback for old browsers */
+     background: url('assets/stars.svg'), -webkit-linear-gradient(to right, #5352ed, #3742fa);
+    /* Chrome 10-25, Safari 5.1-6 */
+     background: url('assets/stars.svg'), linear-gradient(to right, #5352ed, #3742fa);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: white;
+    user-select: none;
+    cursor: default;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+
+img {
+    position: absolute;
+    margin: 0px;
+    right: 0px;
+    bottom: 0px;
+    text-align: center;
+    width: 75%;
+
+}
+
+.loginBox {
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 4px;
+    position:absolute;
+    left:0; right:0;
+    top:0; bottom:0;
+	margin:auto;
+    width: 50%;
+    height: 40%;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2%;
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.loginBox h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+.controls {
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    -webkit-app-region: drag;
+}
+
+.controls i {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.controls i:active {
+    transform: translateY(.2vw);
+}
+
+.controls i:nth-child(1) {
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    font: 15px/24px "Open Sans", sans-serif;
+    text-align: center;
+    color: white;
+    width: 200px;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    margin-right: auto;
+    margin-left: auto;
+    cursor: default;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.keyBox {
+    border: 0;
+    padding: 7px 0;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+}
+
+.keyBox ~ .focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: 0.4s;
+}
+
+.keyBox:focus ~ .focus-border {
+    width: 100%;
+    transition: 0.4s;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+}
+
+
+.activate-button {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    background-color: rgba(203, 90, 93, 0);
+    width: 125px;
+    height: 25px;
+    margin-top: 28px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    -webkit-transition: 1s cubic-bezier(.2,1,.2,1);
+    -o-transition: 1s cubic-bezier(.2,1,.2,1);
+    transition: 1s cubic-bezier(.2,1,.2,1);
+}
+
+.activate-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.activate-button:active {
+    transition: none;
+    transform: translateY(.2vw);
+}
+
+.activate-button i {
+    margin-right: 10px;
+}
+
+a:not([draggable=true]), img:not([draggable=true]) {
+    -webkit-user-drag: none;
+    user-drag: none; /* Technically not supported in Electron yet */
+}
+a[href^="http://"],
+a[href^="https://"],
+a[href^="ftp://"] {
+    -webkit-user-drag: auto;
+    user-drag: auto; /* Technically not supported in Electron yet */
+}
