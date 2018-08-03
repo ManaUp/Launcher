@@ -59,11 +59,14 @@ Reset</div>
     });
 
     save.addEventListener('click', function(e) {
-      const newPath = pathInput.value;
+      let newPath = pathInput.value;
       if (newPath.length == 0) {
         alert("Path is empty");
       }
       else {
+        newPath = newPath.replace(" ", "\\ ");
+        newPath = newPath.replace("\\\\", "\\");
+        newPath = newPath.replace("101/", "101");
         ipcRenderer.send('path:change', newPath);
         let notif = new Notification('Configuration Updated', {
           body: 'New game path successfully saved',
@@ -76,20 +79,6 @@ Reset</div>
     reset.addEventListener('click', function(e) {
       pathInput.value = resetPath;
     });
-    
-    const form = document.querySelector('form');
-    form.addEventListener('submit', submitForm);
-
-    function submitForm(e) {
-      e.preventDefault();
-      const item = document.querySelector("#item").value;
-      if (item.length == 0) {
-        alert("null value");
-      }
-      else {
-      ipcRenderer.send('item:add', item);
-      }
-    }
   </script>
 
 </body>

@@ -10,7 +10,7 @@
     <div class="controls">
     </div>
     <div class="loginBox">
-      <h1>macOS Launch</h1>
+      <h1>ezLaunch</h1>
       <p>If you are on macOS, make sure you are running the windows version of the game through wine.</p>
       <p>You will need to patch to play updates.</p>
       <div class="activate-button" id="button">
@@ -34,14 +34,6 @@
         icon: 'https://i.imgur.com/FQNnvrd.png',
         image: 'https://i.imgur.com/FQNnvrd.png'
       });
-    });
-
-    close.addEventListener('click', function(e){
-      ipcRenderer.send('app:quit');
-    });
-
-    minimize.addEventListener('click', function(e) {
-      ipcRenderer.send('app:minimize');
     });
 
     playButton.addEventListener('click', function(e) {

@@ -90,7 +90,29 @@ reloadConfig(() => {
   }
 });
 
-// Set custom path to default if nothing set
+// Catch start game
+ipcMain.on('game:start', function (e) {
+  console.log('starting shit');
+  let command;
+  if (process.platform == 'darwin') {
+    command = `wine ${config.customPath}/Bin/WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English`;
+  }
+  else {
+    command = `${config.customPath}\Bin\WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English`
+  }
+
+  mainWindow.webContents.send('started');
+
+  exec(command,
+    (error, stdout, stderr) => {
+      console.log(`${stdout}`);
+      console.log(`${stderr}`);
+      if (error !== null) {
+        console.log(`exec error: ${error}`);
+      }
+    }
+  );
+});
 
 // Path change
 ipcMain.on('path:change', function(e, newPath) {
@@ -120,28 +142,6 @@ ipcMain.on('app:minimize', function(e) {
   mainWindow.minimize();
 });
 
-// Catch start game
-ipcMain.on('game:start', function(e) {
-  let command;
-  if (process.platform == 'darwin') {
-    command = `wine ${config.customPath}/Bin/WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English`;
-  }
-  else {
-    command = `${config.customPath}\Bin\WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English`
-  }
-
-  mainWindow.webContents.send('started');
-
-  exec(command,
-    (error, stdout, stderr) => {
-      console.log(`${stdout}`);
-      console.log(`${stderr}`);
-      if (error !== null) {
-        console.log(`exec error: ${error}`);
-      }
-    }
-  );
-});
 
 // Create menu template
 const mainMenuTemplate = [
@@ -171,8 +171,9 @@ if (process.platform == 'darwin') {
   mainMenuTemplate.unshift({});
 }
 
+let prod = true;
 // Add developer tools item if not in production
-if (process.env.NODE_ENV !== 'production') {
+if (prod) {
   mainMenuTemplate.push({
     label: 'Developer Tools',
     submenu: [
