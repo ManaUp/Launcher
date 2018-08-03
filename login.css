@@ -8,7 +8,7 @@
 
 body {
     margin: 0px;
-    
+    font-family: 'Open Sans', sans-serif;
     background: url("assets/stars.svg"), #4e54c8;  /* fallback for old browsers */
     background: url("assets/stars.svg"), -webkit-linear-gradient(to right, #6c3fd7, #4e54c8);  /* Chrome 10-25, Safari 5.1-6 */
     background: url("assets/stars.svg"), linear-gradient(to right, #6c3fd7, #4e54c8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -81,12 +81,11 @@ img {
 }
 
 input[type="text"] {
-    font: 15px/24px "Open Sans", sans-serif;
+    font: 12px "Open Sans", sans-serif;
     text-align: center;
     color: white;
-    width: 200px;
+    width: 300px;
     box-sizing: border-box;
-    letter-spacing: 1px;
     margin-right: auto;
     margin-left: auto;
     cursor: default;
@@ -175,4 +174,74 @@ a[href^="https://"],
 a[href^="ftp://"] {
     -webkit-user-drag: auto;
     user-drag: auto; /* Technically not supported in Electron yet */
+}
+
+.path-container {
+    padding: 10px;
+    text-align: center;
+}
+
+.path-container h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+.path-container p {
+    text-align: center;
+}
+
+button[id="browse"] {
+    margin-left: 5px;
+    outline: none;
+    border: none;
+    background: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 60px;
+    text-align: center;
+}
+
+button[id="browse"]:active {
+    transform: translateY(.4vw);
+}
+
+.roundBtn {
+    display: inline-block;
+    border: none;
+    text-align: center;
+    padding: 1.2vw 3vw 1vw;
+    border-radius: 0.2vw;
+    margin: 1.3vw;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    transition: all .15s;
+    color: white;
+    width: 100px;
+    border-radius: 20px;
+}
+
+.is-light-gray {
+    background: white;
+    color: black;
+}
+
+.is-red {
+    background: #ff6b81;
+    color: white;
+}
+
+.roundBtn:active {
+    transform: translateY(.4vw);
+}
+
+.buttons {
+    margin-top: 25px;
+}
+
+.buttons i {
+    margin-right: 5px;
 }

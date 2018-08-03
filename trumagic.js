@@ -2,6 +2,7 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 const exec = require('child_process').exec;
+const fs = require('fs');
 
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
@@ -34,6 +35,80 @@ app.on('ready', function() {
 
 });
 
+// Handle creating the path window
+function createChangeWindow() {
+  pathWindow = new BrowserWindow({
+    width: 400,
+    height: 280,
+    frame: false,
+    titleBarStyle: 'hidden-inset',
+    resizable: false,
+    title: 'Specify Path'
+  });
+  // Load html
+  pathWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'addWindow.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+  pathWindow.on('close', function() {
+    pathWindow = null;
+  });
+}
+
+// Path configuration
+let config;
+
+reloadConfig = (callback) => {
+  fs.readFile('./config.json', 'utf-8', (err, data) => {
+    if (err) throw err;
+    config = JSON.parse(data);
+    if (callback) {
+      callback();
+    }
+  });
+}
+
+saveConfig = (configSettings) => {
+  let content = JSON.stringify(configSettings);
+  fs.writeFile("./config.json", content, 'utf8', function (err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Config updated");
+  });
+  reloadConfig(() => {
+    console.log("Reloading config");
+  });
+}
+
+// Initially load config
+reloadConfig(() => {
+  if (!config.customPath) {
+    config.customPath = process.platform == 'darwin' ? config.macDefault : config.winDefault;
+    saveConfig(config);
+  }
+});
+
+// Set custom path to default if nothing set
+
+// Path change
+ipcMain.on('path:change', function(e, newPath) {
+  config.customPath = newPath; 
+  saveConfig(config);
+});
+
+// Path request
+ipcMain.on('request:reset', function(e) {
+  let resetPath = process.platform == 'darwin' ? config.macDefault : config.winDefault;
+  pathWindow.webContents.send('reset:path', resetPath);
+});
+
+// Path request
+ipcMain.on('request:current', function(e) {
+  let currentPath = config.customPath;
+  pathWindow.webContents.send('current:path', currentPath);
+});
 
 // Catch quit
 ipcMain.on('app:quit', function(e) {
@@ -49,10 +124,10 @@ ipcMain.on('app:minimize', function(e) {
 ipcMain.on('game:start', function(e) {
   let command;
   if (process.platform == 'darwin') {
-    command = 'wine ~/.wine/drive_c/ProgramData/Kingsisle\\ Entertainment/Wizard101/Bin/WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English';
+    command = `wine ${config.customPath}/Bin/WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English`;
   }
   else {
-    command = 'C:\ProgramData\KingsIsle Entertainment\Wizard101\Bin\WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English'
+    command = `${config.customPath}\Bin\WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English`
   }
 
   mainWindow.webContents.send('started');
@@ -73,6 +148,13 @@ const mainMenuTemplate = [
   {
     label: 'File',
     submenu: [
+      {
+        label: 'Specify Path',
+        accelerator: process.platform == 'darwin' ? 'Command+M' : 'Ctrl+M',
+        click() {
+          createChangeWindow();
+        }
+      },
       {
         label: 'Quit',
         accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
