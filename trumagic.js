@@ -95,7 +95,7 @@ ipcMain.on('game:start', function (e) {
   console.log('starting shit');
   let command;
   if (process.platform == 'darwin') {
-    command = `wine ${config.customPath}/Bin/WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English`;
+    command = `cd ${config.customPath}/Bin && wine WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English`;
   }
   else {
     command = `${config.customPath}\Bin\WizardGraphicalClient.exe -L login.us.wizard101.com 12000 -A English`
